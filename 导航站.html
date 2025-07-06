@@ -1,0 +1,2097 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流动的墨水画卷 - 网页导航艺术品</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-blue: #2A3A68;
+            --terracotta: #FF8C42;
+            --forest-green: #5F7A3C;
+            --warm-brown: #4E3B31;
+            --bright-yellow: #FFD700;
+            --energy-cyan: #4CC9F0;
+            --paper-white: #F8F4EC;
+            --ink-black: #1A1A1A;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--paper-white);
+            color: var(--warm-brown);
+            line-height: 1.6;
+            padding-bottom: 80px;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 140, 66, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(95, 122, 60, 0.05) 0%, transparent 50%),
+                linear-gradient(135deg, transparent 0%, rgba(42, 58, 104, 0.02) 100%);
+        }
+        
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .hero-section {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px 5px 25px 10px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #3A4A78 100%);
+            color: white;
+            padding: 60px 30px;
+            box-shadow: 0 15px 35px rgba(42, 58, 104, 0.3);
+        }
+        
+        .hero-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 15px 3px 20px 8px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 3px solid;
+            border-image: linear-gradient(45deg, var(--terracotta), var(--forest-green)) 1;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px) rotate(0.5deg);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed var(--terracotta);
+        }
+        
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+        }
+        
+        .category-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        
+        .site-list {
+            list-style: none;
+        }
+        
+        .site-item {
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            background: linear-gradient(135deg, rgba(255, 140, 66, 0.05) 0%, rgba(95, 122, 60, 0.05) 100%);
+            border-radius: 8px 2px 12px 4px;
+            border: 1px solid rgba(255, 140, 66, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .site-item:hover {
+            background: linear-gradient(135deg, rgba(255, 140, 66, 0.1) 0%, rgba(95, 122, 60, 0.1) 100%);
+            border-color: var(--terracotta);
+            transform: translateX(5px);
+        }
+        
+        .site-name {
+            font-weight: 600;
+            color: var(--primary-blue);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .site-name:hover {
+            color: var(--terracotta);
+        }
+        
+        .site-url {
+            font-size: 0.9rem;
+            color: var(--forest-green);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+        
+        .site-description {
+            font-size: 0.9rem;
+            color: var(--warm-brown);
+            opacity: 0.8;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .site-actions {
+            display: flex;
+            gap: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .site-item:hover .site-actions {
+            opacity: 1;
+        }
+
+        .edit-btn, .delete-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px 2px 8px 3px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn {
+            background: linear-gradient(135deg, var(--energy-cyan) 0%, #3BB3E0 100%);
+            color: white;
+        }
+
+        .edit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(76, 201, 240, 0.4);
+        }
+
+        .delete-btn {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF5252 100%);
+            color: white;
+        }
+
+        .delete-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(255, 107, 107, 0.4);
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-top: 3px solid var(--terracotta);
+            padding: 15px 0;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--warm-brown);
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 12px 3px 15px 5px;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            color: var(--terracotta);
+            background: rgba(255, 140, 66, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .nav-item.active .nav-icon {
+            fill: var(--terracotta);
+            stroke: var(--terracotta);
+        }
+        
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 5px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .add-category-nav {
+            border: 2px dashed var(--terracotta);
+            border-radius: 15px 5px 18px 8px;
+            background: rgba(255, 140, 66, 0.05);
+        }
+
+        .add-category-nav:hover {
+            background: rgba(255, 140, 66, 0.15);
+            border-color: var(--bright-yellow);
+        }
+        
+        .search-section {
+            background: white;
+            border-radius: 20px 8px 25px 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid var(--energy-cyan);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid rgba(76, 201, 240, 0.3);
+            border-radius: 25px 8px 25px 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(76, 201, 240, 0.05) 0%, rgba(255, 140, 66, 0.05) 100%);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--energy-cyan);
+            box-shadow: 0 0 15px rgba(76, 201, 240, 0.3);
+        }
+
+        .search-btn, .clear-search-btn {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50% 20% 50% 20%;
+            background: linear-gradient(135deg, var(--energy-cyan) 0%, #3BB3E0 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-btn:hover, .clear-search-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.4);
+        }
+
+        .search-icon, .clear-icon {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .search-results {
+            background: linear-gradient(135deg, rgba(76, 201, 240, 0.05) 0%, rgba(255, 140, 66, 0.05) 100%);
+            border-radius: 15px 5px 20px 8px;
+            padding: 20px;
+            border: 1px dashed var(--energy-cyan);
+        }
+
+        .search-results h3 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-family: 'Noto Serif SC', serif;
+        }
+
+        .stats-section {
+            background: white;
+            border-radius: 20px 8px 25px 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 2px solid var(--forest-green);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stats-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(42, 58, 104, 0.05) 0%, rgba(255, 140, 66, 0.05) 100%);
+            border-radius: 12px 4px 15px 6px;
+            border: 1px dashed var(--terracotta);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--terracotta);
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--warm-brown);
+            margin-top: 5px;
+        }
+        
+        .add-site-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--terracotta) 0%, #FF6B1A 100%);
+            border: none;
+            border-radius: 50% 20% 50% 20%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 140, 66, 0.4);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        
+        .add-site-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 25px rgba(255, 140, 66, 0.6);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .category-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .main-content {
+                padding: 15px;
+            }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px 8px 25px 12px;
+            border: 3px solid var(--terracotta);
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        .modal-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--warm-brown);
+        }
+        
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid rgba(255, 140, 66, 0.3);
+            border-radius: 8px 3px 10px 4px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--terracotta);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            height: 80px;
+        }
+        
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px 3px 10px 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--terracotta) 0%, #FF6B1A 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 140, 66, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: var(--warm-brown);
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .decorative-doodle {
+            position: absolute;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+        }
+
+        .icon-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .icon-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid rgba(255, 140, 66, 0.3);
+            border-radius: 12px 4px 15px 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(255, 140, 66, 0.05) 0%, rgba(95, 122, 60, 0.05) 100%);
+        }
+
+        .icon-option:hover {
+            border-color: var(--terracotta);
+            background: linear-gradient(135deg, rgba(255, 140, 66, 0.1) 0%, rgba(95, 122, 60, 0.1) 100%);
+            transform: translateY(-2px);
+        }
+
+        .icon-option.selected {
+            border-color: var(--terracotta);
+            background: linear-gradient(135deg, rgba(255, 140, 66, 0.2) 0%, rgba(95, 122, 60, 0.2) 100%);
+            box-shadow: 0 5px 15px rgba(255, 140, 66, 0.3);
+        }
+
+        .icon-option svg {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 8px;
+        }
+
+        .icon-option-label {
+            font-size: 0.9rem;
+            color: var(--warm-brown);
+            text-align: center;
+        }
+
+        .import-export-section {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px dashed var(--forest-green);
+        }
+
+        .section-subtitle {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.3rem;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .import-export-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-export {
+            background: linear-gradient(135deg, var(--forest-green) 0%, #4A6B2A 100%);
+            color: white;
+        }
+
+        .btn-export:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(95, 122, 60, 0.4);
+        }
+
+        .btn-import {
+            background: linear-gradient(135deg, var(--energy-cyan) 0%, #3BB3E0 100%);
+            color: white;
+        }
+
+        .btn-import:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.4);
+        }
+
+        .btn-icon {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- 隐藏的SVG图标库 -->
+    <svg style="display: none;">
+        <defs>
+            <!-- 导航图标 -->
+            <symbol id="home-icon" viewBox="0 0 24 24">
+                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </symbol>
+
+            <symbol id="tools-icon" viewBox="0 0 24 24">
+                <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 110 3.44c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 110-3.44zm-7.748 9.097c0 .69.56 1.25 1.25 1.25h2.5c.69 0 1.25-.56 1.25-1.25v-2.5c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v2.5zm12.5 0c0 .69.56 1.25 1.25 1.25h2.5c.69 0 1.25-.56 1.25-1.25v-2.5c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v2.5z"/>
+            </symbol>
+
+            <symbol id="resources-icon" viewBox="0 0 24 24">
+                <path d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </symbol>
+
+            <symbol id="design-icon" viewBox="0 0 24 24">
+                <path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM7 21h10a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2z"/>
+            </symbol>
+
+            <symbol id="ai-icon" viewBox="0 0 24 24">
+                <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+            </symbol>
+
+            <symbol id="dev-icon" viewBox="0 0 24 24">
+                <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </symbol>
+
+            <symbol id="entertainment-icon" viewBox="0 0 24 24">
+                <path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </symbol>
+
+            <!-- 分类图标 -->
+            <symbol id="tool-category" viewBox="0 0 50 50">
+                <path d="M10 15 L20 5 L35 20 L25 30 Z" fill="#FF8C42" stroke="#2A3A68" stroke-width="2"/>
+                <circle cx="30" cy="35" r="8" fill="#5F7A3C" opacity="0.7"/>
+                <path d="M15 25 Q25 15 35 25 Q25 35 15 25" fill="none" stroke="#FFD700" stroke-width="2"/>
+            </symbol>
+
+            <symbol id="resource-category" viewBox="0 0 50 50">
+                <path d="M5 10 L45 10 L40 40 L10 40 Z" fill="#5F7A3C" stroke="#2A3A68" stroke-width="2"/>
+                <circle cx="15" cy="20" r="3" fill="#FF8C42"/>
+                <circle cx="25" cy="20" r="3" fill="#FFD700"/>
+                <circle cx="35" cy="20" r="3" fill="#4CC9F0"/>
+                <path d="M10 30 L40 30" stroke="#2A3A68" stroke-width="2"/>
+            </symbol>
+
+            <symbol id="design-category" viewBox="0 0 50 50">
+                <path d="M15 5 L35 5 Q40 5 40 10 L40 35 Q40 40 35 40 L15 40 Q10 40 10 35 L10 10 Q10 5 15 5" fill="#FF8C42" opacity="0.8"/>
+                <path d="M15 15 L35 15" stroke="#2A3A68" stroke-width="2"/>
+                <path d="M15 25 L30 25" stroke="#5F7A3C" stroke-width="2"/>
+                <circle cx="32" cy="32" r="5" fill="#FFD700"/>
+            </symbol>
+
+            <symbol id="ai-category" viewBox="0 0 50 50">
+                <circle cx="25" cy="25" r="15" fill="none" stroke="#4CC9F0" stroke-width="2"/>
+                <path d="M25 10 L30 20 L25 25 L20 20 Z" fill="#FF8C42"/>
+                <path d="M10 25 L20 30 L25 25 L20 20 Z" fill="#5F7A3C"/>
+                <path d="M25 40 L20 30 L25 25 L30 30 Z" fill="#FFD700"/>
+                <path d="M40 25 L30 20 L25 25 L30 30 Z" fill="#2A3A68"/>
+                <circle cx="25" cy="25" r="3" fill="#FF8C42"/>
+            </symbol>
+
+            <symbol id="dev-category" viewBox="0 0 50 50">
+                <rect x="5" y="10" width="40" height="30" rx="3" fill="#2A3A68" stroke="#FF8C42" stroke-width="2"/>
+                <rect x="8" y="13" width="34" height="20" fill="#F8F4EC"/>
+                <path d="M12 18 L16 22 L12 26" stroke="#5F7A3C" stroke-width="2" fill="none"/>
+                <path d="M20 26 L28 26" stroke="#FF8C42" stroke-width="2"/>
+                <circle cx="35" cy="22" r="2" fill="#4CC9F0"/>
+            </symbol>
+
+            <symbol id="entertainment-category" viewBox="0 0 50 50">
+                <circle cx="25" cy="25" r="18" fill="#FFD700" opacity="0.3"/>
+                <path d="M20 15 L20 35 L35 25 Z" fill="#FF8C42"/>
+                <path d="M10 20 Q25 10 40 20 Q25 30 10 20" fill="none" stroke="#5F7A3C" stroke-width="2"/>
+                <circle cx="15" cy="15" r="2" fill="#4CC9F0"/>
+                <circle cx="35" cy="15" r="2" fill="#2A3A68"/>
+                <circle cx="35" cy="35" r="2" fill="#5F7A3C"/>
+            </symbol>
+
+            <!-- 更多分类图标选项 -->
+            <symbol id="education-category" viewBox="0 0 50 50">
+                <rect x="8" y="15" width="34" height="25" rx="2" fill="#FF8C42" opacity="0.8"/>
+                <path d="M12 20 L38 20" stroke="#2A3A68" stroke-width="2"/>
+                <path d="M12 25 L32 25" stroke="#5F7A3C" stroke-width="2"/>
+                <path d="M12 30 L28 30" stroke="#FFD700" stroke-width="2"/>
+                <circle cx="35" cy="35" r="3" fill="#4CC9F0"/>
+                <path d="M25 5 L30 12 L20 12 Z" fill="#2A3A68"/>
+            </symbol>
+
+            <symbol id="shopping-category" viewBox="0 0 50 50">
+                <path d="M10 15 L40 15 L38 35 L12 35 Z" fill="#5F7A3C" opacity="0.8"/>
+                <circle cx="16" cy="40" r="3" fill="#FF8C42"/>
+                <circle cx="34" cy="40" r="3" fill="#FF8C42"/>
+                <path d="M8 10 L12 10 L15 15" stroke="#2A3A68" stroke-width="2" fill="none"/>
+                <rect x="18" y="20" width="14" height="8" fill="#FFD700" opacity="0.6"/>
+            </symbol>
+
+            <symbol id="finance-category" viewBox="0 0 50 50">
+                <circle cx="25" cy="25" r="18" fill="#FFD700" opacity="0.3"/>
+                <path d="M25 10 L25 40" stroke="#2A3A68" stroke-width="3"/>
+                <path d="M15 18 Q25 12 35 18" stroke="#5F7A3C" stroke-width="2" fill="none"/>
+                <path d="M15 32 Q25 38 35 32" stroke="#FF8C42" stroke-width="2" fill="none"/>
+                <circle cx="25" cy="25" r="8" fill="none" stroke="#4CC9F0" stroke-width="2"/>
+            </symbol>
+
+            <symbol id="health-category" viewBox="0 0 50 50">
+                <path d="M25 8 L30 18 L25 25 L20 18 Z" fill="#FF8C42"/>
+                <path d="M15 25 L35 25" stroke="#2A3A68" stroke-width="3"/>
+                <path d="M25 15 L25 35" stroke="#2A3A68" stroke-width="3"/>
+                <circle cx="25" cy="25" r="15" fill="none" stroke="#5F7A3C" stroke-width="2"/>
+                <circle cx="18" cy="18" r="2" fill="#4CC9F0"/>
+                <circle cx="32" cy="32" r="2" fill="#FFD700"/>
+            </symbol>
+
+            <symbol id="news-category" viewBox="0 0 50 50">
+                <rect x="8" y="8" width="34" height="34" rx="2" fill="#F8F4EC" stroke="#2A3A68" stroke-width="2"/>
+                <path d="M12 15 L38 15" stroke="#FF8C42" stroke-width="3"/>
+                <path d="M12 22 L28 22" stroke="#5F7A3C" stroke-width="2"/>
+                <path d="M12 27 L32 27" stroke="#5F7A3C" stroke-width="2"/>
+                <path d="M12 32 L25 32" stroke="#5F7A3C" stroke-width="2"/>
+                <rect x="30" y="20" width="8" height="8" fill="#4CC9F0" opacity="0.6"/>
+            </symbol>
+
+            <symbol id="social-category" viewBox="0 0 50 50">
+                <circle cx="20" cy="20" r="8" fill="#FF8C42" opacity="0.7"/>
+                <circle cx="35" cy="25" r="6" fill="#5F7A3C" opacity="0.7"/>
+                <circle cx="25" cy="35" r="7" fill="#4CC9F0" opacity="0.7"/>
+                <path d="M20 28 Q25 30 30 25" stroke="#2A3A68" stroke-width="2" fill="none"/>
+                <path d="M28 20 Q30 22 35 19" stroke="#FFD700" stroke-width="2" fill="none"/>
+            </symbol>
+
+            <symbol id="travel-category" viewBox="0 0 50 50">
+                <circle cx="25" cy="25" r="18" fill="#4CC9F0" opacity="0.3"/>
+                <path d="M15 25 L35 25" stroke="#2A3A68" stroke-width="2"/>
+                <path d="M25 15 L25 35" stroke="#2A3A68" stroke-width="2"/>
+                <circle cx="25" cy="25" r="3" fill="#FF8C42"/>
+                <path d="M20 15 L30 15 L28 20 L22 20 Z" fill="#5F7A3C"/>
+                <circle cx="18" cy="32" r="2" fill="#FFD700"/>
+                <circle cx="32" cy="18" r="2" fill="#FFD700"/>
+            </symbol>
+
+            <symbol id="music-category" viewBox="0 0 50 50">
+                <circle cx="15" cy="35" r="8" fill="#FF8C42" opacity="0.7"/>
+                <circle cx="35" cy="30" r="6" fill="#5F7A3C" opacity="0.7"/>
+                <path d="M23 35 L35 24 L35 10 L40 8 L40 22 L35 24" stroke="#2A3A68" stroke-width="2" fill="none"/>
+                <path d="M10 20 Q25 15 40 20" stroke="#4CC9F0" stroke-width="2" fill="none"/>
+                <circle cx="25" cy="15" r="2" fill="#FFD700"/>
+            </symbol>
+
+            <!-- 装饰性涂鸦 -->
+            <symbol id="star-doodle" viewBox="0 0 20 20">
+                <path d="M10 1 L12 7 L19 7 L14 11 L16 18 L10 14 L4 18 L6 11 L1 7 L8 7 Z" fill="#FFD700" opacity="0.6"/>
+            </symbol>
+
+            <symbol id="leaf-doodle" viewBox="0 0 20 20">
+                <path d="M2 18 Q10 2 18 10 Q10 18 2 18" fill="#5F7A3C" opacity="0.4"/>
+                <path d="M2 18 Q8 8 14 12" stroke="#5F7A3C" stroke-width="1" fill="none"/>
+            </symbol>
+
+            <symbol id="spiral-doodle" viewBox="0 0 20 20">
+                <path d="M10 10 Q5 5 10 2 Q18 5 15 10 Q8 15 10 10" fill="none" stroke="#FF8C42" stroke-width="2" opacity="0.5"/>
+            </symbol>
+        </defs>
+    </svg>
+
+    <div class="main-content">
+        <!-- 英雄区域 -->
+        <div class="hero-section">
+            <svg class="hero-background" viewBox="0 0 800 400">
+                <defs>
+                    <linearGradient id="hero-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.3"/>
+                        <stop offset="50%" style="stop-color:#4CC9F0;stop-opacity:0.2"/>
+                        <stop offset="100%" style="stop-color:#FF8C42;stop-opacity:0.3"/>
+                    </linearGradient>
+                </defs>
+                <path d="M0,100 Q200,50 400,80 T800,120 L800,400 L0,400 Z" fill="url(#hero-gradient)"/>
+                <path d="M100,200 Q300,150 500,180 Q600,200 700,160" stroke="#FFD700" stroke-width="3" fill="none" opacity="0.6"/>
+                <circle cx="150" cy="80" r="15" fill="#FF8C42" opacity="0.4"/>
+                <circle cx="650" cy="180" r="20" fill="#4CC9F0" opacity="0.3"/>
+                <path d="M50,300 L80,280 L110,300 L90,330 Z" fill="#5F7A3C" opacity="0.5"/>
+            </svg>
+
+            <h1 class="hero-title">流动的墨水画卷</h1>
+            <p class="hero-subtitle">每一个工具都是创作的画笔，每一次点击都是灵感的火花</p>
+
+            <!-- 装饰性涂鸦 -->
+            <svg class="decorative-doodle" style="top: 20px; right: 30px;" width="30" height="30">
+                <use href="#star-doodle"/>
+            </svg>
+            <svg class="decorative-doodle" style="bottom: 30px; left: 40px;" width="25" height="25">
+                <use href="#leaf-doodle"/>
+            </svg>
+        </div>
+
+        <!-- 搜索功能 -->
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="搜索网站名称或描述...">
+                <button class="search-btn" onclick="performSearch()">
+                    <svg class="search-icon" viewBox="0 0 24 24">
+                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </button>
+                <button class="clear-search-btn" onclick="clearSearch()" style="display: none;">
+                    <svg class="clear-icon" viewBox="0 0 24 24">
+                        <path d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="searchResults" class="search-results" style="display: none;"></div>
+        </div>
+
+        <!-- 统计信息 -->
+        <div class="stats-section">
+            <h2 class="stats-title">创作者的数字宝库</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number" id="total-sites">36</span>
+                    <span class="stat-label">精选工具</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">6</span>
+                    <span class="stat-label">创意分类</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">创作可能</span>
+                </div>
+            </div>
+
+            <!-- 导入导出功能 -->
+            <div class="import-export-section">
+                <h3 class="section-subtitle">数据管理</h3>
+                <div class="import-export-buttons">
+                    <button class="btn btn-export" onclick="exportToExcel()">
+                        <svg class="btn-icon" viewBox="0 0 24 24">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                            <line x1="16" y1="13" x2="8" y2="21"/>
+                            <line x1="8" y1="13" x2="16" y2="21"/>
+                        </svg>
+                        导出Excel
+                    </button>
+                    <button class="btn btn-import" onclick="triggerImport()">
+                        <svg class="btn-icon" viewBox="0 0 24 24">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                            <line x1="12" y1="18" x2="12" y2="12"/>
+                            <polyline points="9,15 12,12 15,15"/>
+                        </svg>
+                        导入Excel
+                    </button>
+                    <input type="file" id="excelFileInput" accept=".xlsx,.xls,.csv" style="display: none;" onchange="importFromExcel(event)">
+                </div>
+            </div>
+        </div>
+
+        <!-- 分类网格 -->
+        <div class="category-grid" id="categoryGrid">
+            <!-- 实用工具 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <svg class="category-icon">
+                        <use href="#tool-category"/>
+                    </svg>
+                    <h3 class="category-title">实用工具</h3>
+                </div>
+                <ul class="site-list" id="tools-list">
+                    <!-- 动态生成内容 -->
+                </ul>
+            </div>
+
+            <!-- 资源下载 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <svg class="category-icon">
+                        <use href="#resource-category"/>
+                    </svg>
+                    <h3 class="category-title">资源下载</h3>
+                </div>
+                <ul class="site-list" id="resources-list">
+                    <!-- 动态生成内容 -->
+                </ul>
+            </div>
+
+            <!-- 设计创作 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <svg class="category-icon">
+                        <use href="#design-category"/>
+                    </svg>
+                    <h3 class="category-title">设计创作</h3>
+                </div>
+                <ul class="site-list" id="design-list">
+                    <!-- 动态生成内容 -->
+                </ul>
+            </div>
+
+            <!-- AI工具 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <svg class="category-icon">
+                        <use href="#ai-category"/>
+                    </svg>
+                    <h3 class="category-title">AI工具</h3>
+                </div>
+                <ul class="site-list" id="ai-list">
+                    <!-- 动态生成内容 -->
+                </ul>
+            </div>
+
+            <!-- 开发者工具 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <svg class="category-icon">
+                        <use href="#dev-category"/>
+                    </svg>
+                    <h3 class="category-title">开发者工具</h3>
+                </div>
+                <ul class="site-list" id="dev-list">
+                    <!-- 动态生成内容 -->
+                </ul>
+            </div>
+
+            <!-- 娱乐休闲 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <svg class="category-icon">
+                        <use href="#entertainment-category"/>
+                    </svg>
+                    <h3 class="category-title">娱乐休闲</h3>
+                </div>
+                <ul class="site-list" id="entertainment-list">
+                    <!-- 动态生成内容 -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <nav class="bottom-nav">
+        <div class="nav-container">
+            <a href="#" class="nav-item active" data-category="all">
+                <svg class="nav-icon">
+                    <use href="#home-icon"/>
+                </svg>
+                <span class="nav-label">全部</span>
+            </a>
+            <a href="#" class="nav-item" data-category="tools">
+                <svg class="nav-icon">
+                    <use href="#tools-icon"/>
+                </svg>
+                <span class="nav-label">工具</span>
+            </a>
+            <a href="#" class="nav-item" data-category="resources">
+                <svg class="nav-icon">
+                    <use href="#resources-icon"/>
+                </svg>
+                <span class="nav-label">资源</span>
+            </a>
+            <a href="#" class="nav-item" data-category="design">
+                <svg class="nav-icon">
+                    <use href="#design-icon"/>
+                </svg>
+                <span class="nav-label">设计</span>
+            </a>
+            <a href="#" class="nav-item" data-category="ai">
+                <svg class="nav-icon">
+                    <use href="#ai-icon"/>
+                </svg>
+                <span class="nav-label">AI</span>
+            </a>
+            <a href="#" class="nav-item" data-category="dev">
+                <svg class="nav-icon">
+                    <use href="#dev-icon"/>
+                </svg>
+                <span class="nav-label">开发</span>
+            </a>
+            <a href="#" class="nav-item" data-category="entertainment">
+                <svg class="nav-icon">
+                    <use href="#entertainment-icon"/>
+                </svg>
+                <span class="nav-label">娱乐</span>
+            </a>
+            <a href="#" class="nav-item add-category-nav" onclick="openAddCategoryModal()">
+                <svg class="nav-icon">
+                    <path d="M12 5v14m7-7H5"/>
+                </svg>
+                <span class="nav-label">添加</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- 添加网站按钮 -->
+    <button class="add-site-btn" onclick="openAddSiteModal()">+</button>
+
+    <!-- 添加网站模态框 -->
+    <div class="modal" id="addSiteModal">
+        <div class="modal-content">
+            <h2 class="modal-title">添加新网站</h2>
+            <form id="addSiteForm">
+                <div class="form-group">
+                    <label class="form-label" for="siteName">网站名称</label>
+                    <input type="text" id="siteName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="siteUrl">网站网址</label>
+                    <input type="url" id="siteUrl" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="siteCategory">网站分类</label>
+                    <select id="siteCategory" class="form-select" required>
+                        <option value="">请选择分类</option>
+                        <option value="tools">实用工具</option>
+                        <option value="resources">资源下载</option>
+                        <option value="design">设计创作</option>
+                        <option value="ai">AI工具</option>
+                        <option value="dev">开发者工具</option>
+                        <option value="entertainment">娱乐休闲</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="siteDescription">网站介绍</label>
+                    <textarea id="siteDescription" class="form-textarea" required></textarea>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddSiteModal()">取消</button>
+                    <button type="submit" class="btn btn-primary">添加</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 编辑网站模态框 -->
+    <div class="modal" id="editSiteModal">
+        <div class="modal-content">
+            <h2 class="modal-title">编辑网站</h2>
+            <form id="editSiteForm">
+                <input type="hidden" id="editSiteIndex">
+                <input type="hidden" id="editSiteCategory">
+                <div class="form-group">
+                    <label class="form-label" for="editSiteName">网站名称</label>
+                    <input type="text" id="editSiteName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="editSiteUrl">网站网址</label>
+                    <input type="url" id="editSiteUrl" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="editSiteNewCategory">网站分类</label>
+                    <select id="editSiteNewCategory" class="form-select" required>
+                        <option value="tools">实用工具</option>
+                        <option value="resources">资源下载</option>
+                        <option value="design">设计创作</option>
+                        <option value="ai">AI工具</option>
+                        <option value="dev">开发者工具</option>
+                        <option value="entertainment">娱乐休闲</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="editSiteDescription">网站介绍</label>
+                    <textarea id="editSiteDescription" class="form-textarea" required></textarea>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="closeEditSiteModal()">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 添加分类模态框 -->
+    <div class="modal" id="addCategoryModal">
+        <div class="modal-content">
+            <h2 class="modal-title">添加新分类</h2>
+            <form id="addCategoryForm">
+                <div class="form-group">
+                    <label class="form-label" for="categoryName">分类名称</label>
+                    <input type="text" id="categoryName" class="form-input" required placeholder="例如：学习教育">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="categoryKey">分类标识</label>
+                    <input type="text" id="categoryKey" class="form-input" required placeholder="例如：education（英文，无空格）">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">选择图标</label>
+                    <div class="icon-selector">
+                        <div class="icon-option" data-icon="education-category">
+                            <svg><use href="#education-category"/></svg>
+                            <span class="icon-option-label">教育</span>
+                        </div>
+                        <div class="icon-option" data-icon="shopping-category">
+                            <svg><use href="#shopping-category"/></svg>
+                            <span class="icon-option-label">购物</span>
+                        </div>
+                        <div class="icon-option" data-icon="finance-category">
+                            <svg><use href="#finance-category"/></svg>
+                            <span class="icon-option-label">金融</span>
+                        </div>
+                        <div class="icon-option" data-icon="health-category">
+                            <svg><use href="#health-category"/></svg>
+                            <span class="icon-option-label">健康</span>
+                        </div>
+                        <div class="icon-option" data-icon="news-category">
+                            <svg><use href="#news-category"/></svg>
+                            <span class="icon-option-label">新闻</span>
+                        </div>
+                        <div class="icon-option" data-icon="social-category">
+                            <svg><use href="#social-category"/></svg>
+                            <span class="icon-option-label">社交</span>
+                        </div>
+                        <div class="icon-option" data-icon="travel-category">
+                            <svg><use href="#travel-category"/></svg>
+                            <span class="icon-option-label">旅行</span>
+                        </div>
+                        <div class="icon-option" data-icon="music-category">
+                            <svg><use href="#music-category"/></svg>
+                            <span class="icon-option-label">音乐</span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="selectedIcon" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddCategoryModal()">取消</button>
+                    <button type="submit" class="btn btn-primary">添加分类</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 引入SheetJS库用于Excel处理 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <script>
+        // 网站数据存储
+        let siteData = {
+            tools: [
+                {
+                    name: "DataTool",
+                    url: "https://www.datatool.vip/",
+                    description: "完全免费的在线视频下载器，支持40+视频网站资源下载。纯免费好用的视频抓取下载网页工具，主流的国内外的视频网站都可以用。"
+                },
+                {
+                    name: "缩短网址产生器",
+                    url: "https://www.ifreesite.com/shorturl/",
+                    description: "一个可以制作短链接的工具。该网址聚合了is.gd、Short URL、TinyUrl、Ulvis、BitLy五大缩短网址网站。"
+                },
+                {
+                    name: "记灵在线工具",
+                    url: "https://remeins.com/",
+                    description: "日常常用工具大全。包含了日常工具、图片工具、PDF工具、文档工具、财务工具、视频工具、程序员工具等十三种强大的在线工具大全。"
+                },
+                {
+                    name: "在线抠图工具",
+                    url: "https://www.remove.bg/zh",
+                    description: "一键去除图片背景。一键上传图片后自动抠图，支持背景替换与编辑，免费用户每月可以处理50张低分辨率图片。"
+                },
+                {
+                    name: "在线图片放大工具",
+                    url: "https://cappuccino.moe/",
+                    description: "支持多种格式、风格的图片放大。可以用该工具进行不同风格的清晰化放大，主界面下有三种风格可以参考其参数。"
+                },
+                {
+                    name: "在线图片美化工具",
+                    url: "https://shots.so/",
+                    description: "高度自定义的图片视觉调整、高效的套壳生成流程工具。适用于设计师、开发者及内容创作者的模板生成和图片美化的在线工具。"
+                }
+            ],
+            resources: [
+                {
+                    name: "Raphael AI",
+                    url: "https://raphael.app/zh",
+                    description: "免费无限制的世界首个无限免费AI图像生成器。零成本、完全免费，并且没有很多平台的积分等限制使用条件。"
+                },
+                {
+                    name: "Dialogue",
+                    url: "https://dialogue.moe/",
+                    description: "以词搜番神器。可通过输入台词片段，快速定位该台词对应的动画或漫画作品，资源庞大，并且支持中文搜索。"
+                },
+                {
+                    name: "软仓",
+                    url: "https://ruancang.net/",
+                    description: "你的常用设计/动画/工程/数据软件下载大全。专注于提供各类设计、工程、影视等领域的专业软件下载。"
+                },
+                {
+                    name: "对酒当歌分享",
+                    url: "https://www.haozy.top/#/",
+                    description: "一个非常专业的纯资源分享文档。完全免费、无套路、海量资源免费分享，包含有游戏、电影、电视剧、动漫、纪录片、音乐、书籍等。"
+                },
+                {
+                    name: "夸克网盘吧",
+                    url: "https://www.kuakeba.fun/",
+                    description: "一个专注于夸克网盘资源的分享网站。资源较全，质量也都还OK，在其他网站找不到想要的资源了再来这个网站检索。"
+                },
+                {
+                    name: "AI中国-AI工具箱",
+                    url: "https://tool.aiofchina.com/",
+                    description: "AI工具聚合与分类导航。聚合了全网常用AI工具，提供多维度分类，帮助用户快速定位所需工具。"
+                }
+            ],
+            design: [
+                {
+                    name: "Canva可画",
+                    url: "https://www.canva.cn/",
+                    description: "功能强大的在线设计平台。拥有海量模板与素材，提供超过10万种设计模板，涵盖社交媒体图片、海报、演示文稿、简历、视频等多种场景。"
+                },
+                {
+                    name: "创客贴",
+                    url: "https://www.chuangkit.com/",
+                    description: "非专业用户的在线平面设计工具。主打极简操作和多场景设计模板，支持网页版、移动端及桌面版，多端同步。"
+                },
+                {
+                    name: "insMind在线图片处理",
+                    url: "https://www.insmind.com/",
+                    description: "AI商品图编辑工具。专注于为商家和电商用户提供高效、智能的图片处理与设计服务，提供AI背景处理、AI模特生成等功能。"
+                },
+                {
+                    name: "稿定",
+                    url: "https://www.gaoding.com/",
+                    description: "用AI提供高效、便捷的多场景设计工具。拥有海量模板库，覆盖海报、PPT、简历、电商主图等60余类设计场景。"
+                },
+                {
+                    name: "ICONS8",
+                    url: "https://igoutu.cn/",
+                    description: "免费的设计素材资源网站。以提供免费设计素材为核心，涵盖图标、插画、矢量图、照片、音乐等多种资源。"
+                }
+            ],
+            ai: [
+                {
+                    name: "PromptHero",
+                    url: "https://prompthero.com/",
+                    description: "一个专注于生成式人工智能提示词的共享平台。旨在帮助用户通过优化提示词提升AI模型的创作效果。"
+                },
+                {
+                    name: "Civitai",
+                    url: "https://civitai.com/",
+                    description: "一个专注于Ai生成艺术模型共享的开源社区。以Stable Diffusion模型为核心，提供用户上传、下载、协作改进模型的平台。"
+                },
+                {
+                    name: "Lexica.art",
+                    url: "https://lexica.art/",
+                    description: "一个结合Ai提示词搜索引擎和图像生成工具的平台。专注于通过文本描述生成高质量图像。"
+                },
+                {
+                    name: "Kalos.Art",
+                    url: "https://lib.kalos.art/",
+                    description: "一个专注于Ai艺术风格参考库。旨在为创作者提供全球最大的AI艺术风格资源库和灵感来源。"
+                },
+                {
+                    name: "AIGODLIKE",
+                    url: "https://www.aigodlike.com/",
+                    description: "一个专注于AIGC工具资源整合与本地化支持的中文社区平台。主要服务于Stable Diffusion、ComfyUI等开源AI模型用户。"
+                }
+            ],
+            dev: [
+                {
+                    name: "W3Schools",
+                    url: "https://www.w3schools.com/",
+                    description: "全球最大免费Web开发学习平台。专注HTML/CSS、JavaScript、前端框架、后端、数据科学等全栈技术的开发与学习。"
+                },
+                {
+                    name: "FMHY",
+                    url: "https://fmhy.net/",
+                    description: "规模最大的免费资源导航平台之一。致力于收集和分享网上的所有合法免费资源，涵盖了影视、软件、教育、娱乐等各个领域。"
+                }
+            ],
+            entertainment: [
+                {
+                    name: "SeedHub 影视&动漫分享",
+                    url: "https://www.seedhub.cc/",
+                    description: "一个专注于影视与动漫资源聚合的下载导航平台。聚合了电影、电视剧、动漫等资源的下载链接。"
+                },
+                {
+                    name: "低端影视",
+                    url: "https://ddys.pro/",
+                    description: "一个高清影视资源在线观看与下载服务的中文网站。涵盖电影、电视剧、纪录片及动漫资源，尤其擅长整合冷门小众作品。"
+                },
+                {
+                    name: "Animeko 弹幕追番",
+                    url: "https://myani.org/",
+                    description: "一站式在线弹幕追番平台。在线多数据源聚合，支持离线缓存、支持Bangumi收藏夹同步、多平台客户端支持的强大追番开源软件。"
+                },
+                {
+                    name: "boardmix 在线白板",
+                    url: "https://boardmix.cn/",
+                    description: "一款集AI智能生成、多人在线协作和可视化表达于一体的全能型白板工具。整合了思维导图、流程图、文档、幻灯片、表格等50+工具。"
+                },
+                {
+                    name: "摸鱼导航",
+                    url: "https://moyu.games/",
+                    description: "一个摸鱼人的专属导航。免下载、即点即玩的轻量化Web游戏平台导航，主打\"碎片时间畅玩3A大作与精品独立游戏\"的体验。"
+                }
+            ]
+        };
+
+        // 加载保存的数据
+        function loadSavedData() {
+            const saved = localStorage.getItem('siteData');
+            if (saved) {
+                siteData = JSON.parse(saved);
+                renderAllCategories();
+                updateTotalSites();
+            }
+        }
+
+        // 保存数据到本地存储
+        function saveData() {
+            localStorage.setItem('siteData', JSON.stringify(siteData));
+            updateTotalSites();
+        }
+
+        // 更新总网站数量
+        function updateTotalSites() {
+            const total = Object.values(siteData).reduce((sum, category) => sum + category.length, 0);
+            document.getElementById('total-sites').textContent = total;
+        }
+
+        // 渲染网站列表
+        function renderSiteList(category, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            siteData[category].forEach((site, index) => {
+                const li = document.createElement('li');
+                li.className = 'site-item';
+                li.innerHTML = `
+                    <a href="${site.url}" class="site-name" target="_blank">${site.name}</a>
+                    <a href="${site.url}" class="site-url" target="_blank">${site.url}</a>
+                    <p class="site-description">${site.description}</p>
+                    <div class="site-actions">
+                        <button class="edit-btn" onclick="openEditSiteModal('${category}', ${index})">编辑</button>
+                        <button class="delete-btn" onclick="deleteSite('${category}', ${index})">删除</button>
+                    </div>
+                `;
+                container.appendChild(li);
+            });
+        }
+
+        // 渲染所有分类
+        function renderAllCategories() {
+            renderSiteList('tools', 'tools-list');
+            renderSiteList('resources', 'resources-list');
+            renderSiteList('design', 'design-list');
+            renderSiteList('ai', 'ai-list');
+            renderSiteList('dev', 'dev-list');
+            renderSiteList('entertainment', 'entertainment-list');
+        }
+
+        // 底部导航切换
+        function setupNavigation() {
+            // 为所有导航项添加点击事件（包括动态添加的）
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.nav-item') && !e.target.closest('.add-category-nav')) {
+                    e.preventDefault();
+
+                    const navItem = e.target.closest('.nav-item');
+                    const category = navItem.dataset.category;
+
+                    if (!category) return;
+
+                    // 移除所有活动状态
+                    document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+
+                    // 添加当前活动状态
+                    navItem.classList.add('active');
+
+                    // 获取所有分类卡片（包括动态添加的）
+                    const categoryCards = document.querySelectorAll('.category-card');
+
+                    if (category === 'all') {
+                        // 显示所有分类
+                        categoryCards.forEach(card => {
+                            card.style.display = 'block';
+                        });
+                    } else {
+                        // 只显示选中的分类
+                        categoryCards.forEach(card => {
+                            const categoryTitle = card.querySelector('.category-title').textContent;
+
+                            // 构建分类映射（包括动态分类）
+                            const categoryMap = {
+                                'tools': '实用工具',
+                                'resources': '资源下载',
+                                'design': '设计创作',
+                                'ai': 'AI工具',
+                                'dev': '开发者工具',
+                                'entertainment': '娱乐休闲'
+                            };
+
+                            // 检查是否是预设分类
+                            let shouldShow = false;
+                            if (categoryMap[category] === categoryTitle) {
+                                shouldShow = true;
+                            } else {
+                                // 检查是否是动态分类
+                                const navItems = document.querySelectorAll('.nav-item[data-category]');
+                                navItems.forEach(nav => {
+                                    if (nav.dataset.category === category) {
+                                        const navLabel = nav.querySelector('.nav-label').textContent;
+                                        if (navLabel === categoryTitle) {
+                                            shouldShow = true;
+                                        }
+                                    }
+                                });
+                            }
+
+                            card.style.display = shouldShow ? 'block' : 'none';
+                        });
+                    }
+                }
+            });
+        }
+
+        // 打开添加网站模态框
+        function openAddSiteModal() {
+            document.getElementById('addSiteModal').style.display = 'block';
+        }
+
+        // 关闭添加网站模态框
+        function closeAddSiteModal() {
+            document.getElementById('addSiteModal').style.display = 'none';
+            document.getElementById('addSiteForm').reset();
+        }
+
+        // 添加新网站
+        function addNewSite(name, url, category, description) {
+            const newSite = {
+                name: name,
+                url: url,
+                description: description
+            };
+
+            siteData[category].push(newSite);
+            saveData();
+            renderSiteList(category, category + '-list');
+            closeAddSiteModal();
+
+            // 显示成功消息
+            alert('网站添加成功！');
+        }
+
+        // 表单提交处理
+        function setupFormSubmission() {
+            const form = document.getElementById('addSiteForm');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const name = document.getElementById('siteName').value.trim();
+                const url = document.getElementById('siteUrl').value.trim();
+                const category = document.getElementById('siteCategory').value;
+                const description = document.getElementById('siteDescription').value.trim();
+
+                if (name && url && category && description) {
+                    addNewSite(name, url, category, description);
+                } else {
+                    alert('请填写所有必填字段！');
+                }
+            });
+        }
+
+        // 点击模态框外部关闭
+        function setupModalClose() {
+            const addModal = document.getElementById('addSiteModal');
+            addModal.addEventListener('click', (e) => {
+                if (e.target === addModal) {
+                    closeAddSiteModal();
+                }
+            });
+
+            const editModal = document.getElementById('editSiteModal');
+            editModal.addEventListener('click', (e) => {
+                if (e.target === editModal) {
+                    closeEditSiteModal();
+                }
+            });
+        }
+
+        // 添加装饰性动画
+        function addDecorations() {
+            // 为卡片添加随机装饰
+            const cards = document.querySelectorAll('.category-card');
+            cards.forEach((card, index) => {
+                // 随机添加装饰性涂鸦
+                if (Math.random() > 0.7) {
+                    const doodle = document.createElement('svg');
+                    doodle.className = 'decorative-doodle';
+                    doodle.style.position = 'absolute';
+                    doodle.style.top = Math.random() * 20 + 'px';
+                    doodle.style.right = Math.random() * 30 + 'px';
+                    doodle.style.width = '20px';
+                    doodle.style.height = '20px';
+
+                    const useElement = document.createElement('use');
+                    const doodles = ['#star-doodle', '#leaf-doodle', '#spiral-doodle'];
+                    useElement.setAttribute('href', doodles[Math.floor(Math.random() * doodles.length)]);
+
+                    doodle.appendChild(useElement);
+                    card.appendChild(doodle);
+                }
+            });
+        }
+
+        // 初始化应用
+        function initApp() {
+            // 首先渲染所有内容
+            renderAllCategories();
+            updateTotalSites();
+
+            // 然后设置交互功能
+            setupNavigation();
+            setupFormSubmission();
+            setupEditFormSubmission();
+            setupAddCategoryForm();
+            setupModalClose();
+            setupAddCategoryModalClose();
+            setupSearchInput();
+            setupIconSelector();
+            addDecorations();
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', initApp);
+
+        // 搜索功能
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            if (!searchTerm) return;
+
+            const searchResults = [];
+
+            Object.keys(siteData).forEach(category => {
+                siteData[category].forEach((site, index) => {
+                    if (site.name.toLowerCase().includes(searchTerm) ||
+                        site.description.toLowerCase().includes(searchTerm)) {
+                        searchResults.push({
+                            ...site,
+                            category: category,
+                            index: index
+                        });
+                    }
+                });
+            });
+
+            displaySearchResults(searchResults, searchTerm);
+        }
+
+        function displaySearchResults(results, searchTerm) {
+            const searchResultsContainer = document.getElementById('searchResults');
+            const categoryGrid = document.getElementById('categoryGrid');
+
+            if (results.length === 0) {
+                searchResultsContainer.innerHTML = `
+                    <h3>搜索结果</h3>
+                    <p>没有找到包含 "${searchTerm}" 的网站。</p>
+                `;
+            } else {
+                const resultsList = results.map(site => `
+                    <div class="site-item">
+                        <a href="${site.url}" class="site-name" target="_blank">${site.name}</a>
+                        <a href="${site.url}" class="site-url" target="_blank">${site.url}</a>
+                        <p class="site-description">${site.description}</p>
+                        <div class="site-actions">
+                            <button class="edit-btn" onclick="openEditSiteModal('${site.category}', ${site.index})">编辑</button>
+                            <button class="delete-btn" onclick="deleteSite('${site.category}', ${site.index})">删除</button>
+                        </div>
+                    </div>
+                `).join('');
+
+                searchResultsContainer.innerHTML = `
+                    <h3>搜索结果 (${results.length} 个)</h3>
+                    <div class="search-results-list">${resultsList}</div>
+                `;
+            }
+
+            searchResultsContainer.style.display = 'block';
+            categoryGrid.style.display = 'none';
+            document.querySelector('.clear-search-btn').style.display = 'block';
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').style.display = 'none';
+            document.getElementById('categoryGrid').style.display = 'grid';
+            document.querySelector('.clear-search-btn').style.display = 'none';
+        }
+
+        // 编辑网站功能
+        function openEditSiteModal(category, index) {
+            const site = siteData[category][index];
+
+            document.getElementById('editSiteIndex').value = index;
+            document.getElementById('editSiteCategory').value = category;
+            document.getElementById('editSiteName').value = site.name;
+            document.getElementById('editSiteUrl').value = site.url;
+            document.getElementById('editSiteNewCategory').value = category;
+            document.getElementById('editSiteDescription').value = site.description;
+
+            document.getElementById('editSiteModal').style.display = 'block';
+        }
+
+        function closeEditSiteModal() {
+            document.getElementById('editSiteModal').style.display = 'none';
+            document.getElementById('editSiteForm').reset();
+        }
+
+        function updateSite(oldCategory, index, newCategory, updatedSite) {
+            // 从原分类中删除
+            siteData[oldCategory].splice(index, 1);
+
+            // 添加到新分类
+            siteData[newCategory].push(updatedSite);
+
+            saveData();
+            renderAllCategories();
+            closeEditSiteModal();
+
+            // 如果正在显示搜索结果，清除搜索
+            if (document.getElementById('searchResults').style.display === 'block') {
+                clearSearch();
+            }
+
+            alert('网站更新成功！');
+        }
+
+        // 删除网站功能
+        function deleteSite(category, index) {
+            const site = siteData[category][index];
+
+            if (confirm(`确定要删除网站 "${site.name}" 吗？`)) {
+                siteData[category].splice(index, 1);
+                saveData();
+                renderAllCategories();
+
+                // 如果正在显示搜索结果，清除搜索
+                if (document.getElementById('searchResults').style.display === 'block') {
+                    clearSearch();
+                }
+
+                alert('网站删除成功！');
+            }
+        }
+
+        // 设置编辑表单提交
+        function setupEditFormSubmission() {
+            const form = document.getElementById('editSiteForm');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const oldCategory = document.getElementById('editSiteCategory').value;
+                const index = parseInt(document.getElementById('editSiteIndex').value);
+                const newCategory = document.getElementById('editSiteNewCategory').value;
+                const name = document.getElementById('editSiteName').value.trim();
+                const url = document.getElementById('editSiteUrl').value.trim();
+                const description = document.getElementById('editSiteDescription').value.trim();
+
+                if (name && url && newCategory && description) {
+                    const updatedSite = { name, url, description };
+                    updateSite(oldCategory, index, newCategory, updatedSite);
+                } else {
+                    alert('请填写所有必填字段！');
+                }
+            });
+        }
+
+        // 设置搜索输入框回车事件
+        function setupSearchInput() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        }
+
+        // 添加分类功能
+        function openAddCategoryModal() {
+            document.getElementById('addCategoryModal').style.display = 'block';
+        }
+
+        function closeAddCategoryModal() {
+            document.getElementById('addCategoryModal').style.display = 'none';
+            document.getElementById('addCategoryForm').reset();
+            document.getElementById('selectedIcon').value = '';
+            // 清除所有图标选择状态
+            document.querySelectorAll('.icon-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+        }
+
+        function setupIconSelector() {
+            const iconOptions = document.querySelectorAll('.icon-option');
+            const selectedIconInput = document.getElementById('selectedIcon');
+
+            iconOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    // 清除其他选择
+                    iconOptions.forEach(opt => opt.classList.remove('selected'));
+
+                    // 选择当前图标
+                    option.classList.add('selected');
+                    selectedIconInput.value = option.dataset.icon;
+                });
+            });
+        }
+
+        function addNewCategory(name, key, icon) {
+            // 检查分类是否已存在
+            if (siteData[key]) {
+                alert('该分类标识已存在，请使用其他标识！');
+                return;
+            }
+
+            // 添加新分类到数据
+            siteData[key] = [];
+
+            // 创建新的分类卡片
+            const categoryGrid = document.getElementById('categoryGrid');
+            const newCategoryCard = document.createElement('div');
+            newCategoryCard.className = 'category-card';
+            newCategoryCard.innerHTML = `
+                <div class="category-header">
+                    <svg class="category-icon">
+                        <use href="#${icon}"/>
+                    </svg>
+                    <h3 class="category-title">${name}</h3>
+                </div>
+                <ul class="site-list" id="${key}-list">
+                    <!-- 动态生成内容 -->
+                </ul>
+            `;
+            categoryGrid.appendChild(newCategoryCard);
+
+            // 添加到底部导航栏（在添加按钮之前）
+            const navContainer = document.querySelector('.nav-container');
+            const addButton = document.querySelector('.add-category-nav');
+            const newNavItem = document.createElement('a');
+            newNavItem.href = '#';
+            newNavItem.className = 'nav-item';
+            newNavItem.dataset.category = key;
+            newNavItem.innerHTML = `
+                <svg class="nav-icon">
+                    <use href="#${icon}"/>
+                </svg>
+                <span class="nav-label">${name}</span>
+            `;
+
+            // 不需要单独添加点击事件，因为setupNavigation()使用事件委托处理所有导航项
+            navContainer.insertBefore(newNavItem, addButton);
+
+            // 更新添加网站表单的选项
+            const categorySelect = document.getElementById('siteCategory');
+            const editCategorySelect = document.getElementById('editSiteNewCategory');
+
+            const newOption = document.createElement('option');
+            newOption.value = key;
+            newOption.textContent = name;
+
+            const newEditOption = document.createElement('option');
+            newEditOption.value = key;
+            newEditOption.textContent = name;
+
+            categorySelect.appendChild(newOption);
+            editCategorySelect.appendChild(newEditOption);
+
+            saveData();
+            closeAddCategoryModal();
+            alert(`分类 "${name}" 添加成功！`);
+        }
+
+        function setupAddCategoryForm() {
+            const form = document.getElementById('addCategoryForm');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const name = document.getElementById('categoryName').value.trim();
+                const key = document.getElementById('categoryKey').value.trim();
+                const icon = document.getElementById('selectedIcon').value;
+
+                if (name && key && icon) {
+                    // 验证分类标识格式
+                    if (!/^[a-zA-Z][a-zA-Z0-9_]*$/.test(key)) {
+                        alert('分类标识必须以字母开头，只能包含字母、数字和下划线！');
+                        return;
+                    }
+
+                    addNewCategory(name, key, icon);
+                } else {
+                    alert('请填写所有必填字段并选择图标！');
+                }
+            });
+        }
+
+        function setupAddCategoryModalClose() {
+            const modal = document.getElementById('addCategoryModal');
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeAddCategoryModal();
+                }
+            });
+        }
+
+        // Excel导入导出功能
+        function exportToExcel() {
+            try {
+                // 准备导出数据
+                const exportData = [];
+
+                // 添加表头
+                exportData.push(['网站名称', '网站网址', '网站分类', '网站介绍']);
+
+                // 分类名称映射
+                const categoryNames = {
+                    'tools': '实用工具',
+                    'resources': '资源下载',
+                    'design': '设计创作',
+                    'ai': 'AI工具',
+                    'dev': '开发者工具',
+                    'entertainment': '娱乐休闲'
+                };
+
+                // 遍历所有分类和网站
+                Object.keys(siteData).forEach(categoryKey => {
+                    const categoryName = categoryNames[categoryKey] || getCategoryDisplayName(categoryKey);
+
+                    siteData[categoryKey].forEach(site => {
+                        exportData.push([
+                            site.name,
+                            site.url,
+                            categoryName,
+                            site.description
+                        ]);
+                    });
+                });
+
+                // 创建工作簿
+                const wb = XLSX.utils.book_new();
+                const ws = XLSX.utils.aoa_to_sheet(exportData);
+
+                // 设置列宽
+                ws['!cols'] = [
+                    { width: 20 }, // 网站名称
+                    { width: 40 }, // 网站网址
+                    { width: 15 }, // 网站分类
+                    { width: 60 }  // 网站介绍
+                ];
+
+                // 添加工作表到工作簿
+                XLSX.utils.book_append_sheet(wb, ws, '网站导航数据');
+
+                // 生成文件名（包含当前日期）
+                const now = new Date();
+                const dateStr = now.getFullYear() + '-' +
+                              String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                              String(now.getDate()).padStart(2, '0');
+                const filename = `网站导航数据_${dateStr}.xlsx`;
+
+                // 下载文件
+                XLSX.writeFile(wb, filename);
+
+                alert(`导出成功！文件名：${filename}`);
+
+            } catch (error) {
+                console.error('导出失败:', error);
+                alert('导出失败，请检查浏览器是否支持文件下载功能。');
+            }
+        }
+
+        function getCategoryDisplayName(categoryKey) {
+            // 从导航栏获取动态分类的显示名称
+            const navItems = document.querySelectorAll('.nav-item[data-category]');
+            for (let nav of navItems) {
+                if (nav.dataset.category === categoryKey) {
+                    return nav.querySelector('.nav-label').textContent;
+                }
+            }
+            return categoryKey; // 如果找不到，返回原始key
+        }
+
+        function triggerImport() {
+            document.getElementById('excelFileInput').click();
+        }
+
+        function importFromExcel(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+
+                    // 读取第一个工作表
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+
+                    // 转换为JSON数据
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+                    if (jsonData.length < 2) {
+                        alert('Excel文件格式不正确，请确保包含表头和数据行。');
+                        return;
+                    }
+
+                    // 检查表头格式
+                    const headers = jsonData[0];
+                    const expectedHeaders = ['网站名称', '网站网址', '网站分类', '网站介绍'];
+                    const isValidFormat = expectedHeaders.every((header, index) =>
+                        headers[index] && headers[index].toString().trim() === header
+                    );
+
+                    if (!isValidFormat) {
+                        alert('Excel文件格式不正确。请确保表头为：网站名称、网站网址、网站分类、网站介绍');
+                        return;
+                    }
+
+                    // 确认导入
+                    const dataRows = jsonData.slice(1).filter(row => row.length >= 4 && row[0] && row[1]);
+                    if (dataRows.length === 0) {
+                        alert('没有找到有效的数据行。');
+                        return;
+                    }
+
+                    const confirmMsg = `找到 ${dataRows.length} 条网站数据，是否导入？\n注意：这将覆盖现有数据！`;
+                    if (!confirm(confirmMsg)) {
+                        return;
+                    }
+
+                    // 处理导入数据
+                    processImportData(dataRows);
+
+                } catch (error) {
+                    console.error('导入失败:', error);
+                    alert('导入失败，请检查Excel文件格式是否正确。');
+                }
+            };
+
+            reader.readAsArrayBuffer(file);
+
+            // 清空文件输入，允许重复选择同一文件
+            event.target.value = '';
+        }
+
+        function processImportData(dataRows) {
+            // 清空现有数据
+            const newSiteData = {};
+
+            // 分类名称映射（反向）
+            const categoryKeyMap = {
+                '实用工具': 'tools',
+                '资源下载': 'resources',
+                '设计创作': 'design',
+                'AI工具': 'ai',
+                '开发者工具': 'dev',
+                '娱乐休闲': 'entertainment'
+            };
+
+            // 处理每一行数据
+            dataRows.forEach(row => {
+                const [name, url, categoryName, description] = row;
+
+                if (!name || !url || !categoryName || !description) return;
+
+                // 确定分类key
+                let categoryKey = categoryKeyMap[categoryName.toString().trim()];
+
+                // 如果不是预设分类，创建新分类key
+                if (!categoryKey) {
+                    categoryKey = categoryName.toString().trim()
+                        .toLowerCase()
+                        .replace(/[^a-zA-Z0-9\u4e00-\u9fa5]/g, '_')
+                        .replace(/^_+|_+$/g, '');
+
+                    if (!categoryKey) {
+                        categoryKey = 'custom_' + Date.now();
+                    }
+                }
+
+                // 初始化分类数组
+                if (!newSiteData[categoryKey]) {
+                    newSiteData[categoryKey] = [];
+                }
+
+                // 添加网站数据
+                newSiteData[categoryKey].push({
+                    name: name.toString().trim(),
+                    url: url.toString().trim(),
+                    description: description.toString().trim()
+                });
+            });
+
+            // 更新全局数据
+            siteData = newSiteData;
+
+            // 重建界面
+            rebuildInterface();
+
+            // 保存数据
+            saveData();
+
+            alert('导入成功！页面将自动刷新以显示新数据。');
+
+            // 刷新页面以完全重建界面
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        }
+
+        function rebuildInterface() {
+            // 清空现有的分类卡片和导航项
+            const categoryGrid = document.getElementById('categoryGrid');
+            categoryGrid.innerHTML = '';
+
+            // 重建分类卡片
+            Object.keys(siteData).forEach(categoryKey => {
+                // 这里需要根据分类创建对应的卡片和导航项
+                // 由于界面重建比较复杂，建议刷新页面
+            });
+        }
+
+        // 全局函数，供HTML调用
+        window.openAddSiteModal = openAddSiteModal;
+        window.closeAddSiteModal = closeAddSiteModal;
+        window.openEditSiteModal = openEditSiteModal;
+        window.closeEditSiteModal = closeEditSiteModal;
+        window.deleteSite = deleteSite;
+        window.performSearch = performSearch;
+        window.clearSearch = clearSearch;
+        window.openAddCategoryModal = openAddCategoryModal;
+        window.closeAddCategoryModal = closeAddCategoryModal;
+        window.exportToExcel = exportToExcel;
+        window.triggerImport = triggerImport;
+        window.importFromExcel = importFromExcel;
+    </script>
+
+</body>
+</html>
